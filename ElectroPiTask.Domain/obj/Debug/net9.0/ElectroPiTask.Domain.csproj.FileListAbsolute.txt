@@ -1,0 +1,12 @@
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\bin\Debug\net9.0\ElectroPiTask.Domain.deps.json
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\bin\Debug\net9.0\ElectroPiTask.Domain.dll
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\bin\Debug\net9.0\ElectroPiTask.Domain.pdb
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ElectroPiTask.Domain.csproj.AssemblyReference.cache
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ElectroPiTask.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ElectroPiTask.Domain.AssemblyInfoInputs.cache
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ElectroPiTask.Domain.AssemblyInfo.cs
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ElectroPiTask.Domain.csproj.CoreCompileInputs.cache
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ElectroPiTask.Domain.dll
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\refint\ElectroPiTask.Domain.dll
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ElectroPiTask.Domain.pdb
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Domain\obj\Debug\net9.0\ref\ElectroPiTask.Domain.dll

@@ -1,0 +1,201 @@
+[2026-05-21 23:23:49] [INF] [] Starting Application
+[2026-05-21 23:23:50] [FTL] [] Application failed to start
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at ElectroPiTask.API.Program.Main(String[] args) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Program.cs:line 111
+[2026-05-21 23:25:12] [INF] [] Starting Application
+[2026-05-21 23:25:33] [ERR] [ElectroPiTask.Infrastructure.Persistence.ApplicationDbContext] An error occurred while seeding the database.
+System.ArgumentException: Keyword not supported: 'trustedservercertificate'.
+   at Microsoft.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at Microsoft.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms)
+   at Microsoft.Data.SqlClient.SqlConnectionString..ctor(String connectionString)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnectionOptions(String connectionString, DbConnectionOptions previous)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.GetConnectionPoolGroup(DbConnectionPoolKey key, DbConnectionPoolGroupOptions poolOptions, DbConnectionOptions& userConnectionOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.ConnectionString_Set(DbConnectionPoolKey key)
+   at Microsoft.Data.SqlClient.SqlConnection.set_ConnectionString(String value)
+   at Microsoft.Data.SqlClient.SqlConnection..ctor(String connectionString)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.CreateDbConnection()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.get_DbConnection()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.<>c__DisplayClass18_0.<Exists>b__0(DateTime giveUp)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.Exists(Boolean retryOnNotExists)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.Exists()
+   at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.Exists()
+   at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.GetAppliedMigrations()
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.GetAppliedMigrations(DatabaseFacade databaseFacade)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.GetPendingMigrations(DatabaseFacade databaseFacade)
+   at ElectroPiTask.Infrastructure.Persistence.ApplicationDbContextSeed.SeedAsync(IServiceProvider serviceProvider) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Infrastructure\Persistence\ApplicationDbContextSeed.cs:line 26
+[2026-05-21 23:26:37] [INF] [] Starting Application
+[2026-05-21 23:28:19] [INF] [] Starting Application
+[2026-05-21 23:29:22] [INF] [] Starting Application
+[2026-05-21 23:30:15] [INF] [ElectroPiTask.Infrastructure.Persistence.ApplicationDbContext] Database seeding completed successfully.
+[2026-05-21 23:30:19] [WRN] [Microsoft.AspNetCore.Server.Kestrel] Overriding address(es) 'https://localhost:7286, http://localhost:5203'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+[2026-05-21 23:31:17] [INF] [] Starting Application
+[2026-05-21 23:31:32] [INF] [ElectroPiTask.Infrastructure.Persistence.ApplicationDbContext] Database seeding completed successfully.
+[2026-05-21 23:32:18] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:32:19] [WRN] [ElectroPiTask.Application.Services.AuthService] Failed login attempt for admin@elctropi.com f
+[2026-05-21 23:32:19] [ERR] [ElectroPiTask.API.Controllers.AuthController] Error during login attempt for email: admin@elctropi.com
+System.Exception: Invalid email or password
+   at ElectroPiTask.Application.Services.AuthService.LoginAsync(LoginDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\Services\AuthService.cs:line 74
+   at ElectroPiTask.API.Controllers.AuthController.Login(LoginDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Controllers\AuthController.cs:line 50
+[2026-05-21 23:32:29] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:32:29] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:33:47] [ERR] [Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'ElectroPiTask.Application.Services.ProjectService' while attempting to activate 'ElectroPiTask.API.Controllers.ProjectController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method78(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+[2026-05-21 23:36:16] [INF] [] Starting Application
+[2026-05-21 23:36:19] [INF] [ElectroPiTask.Infrastructure.Persistence.ApplicationDbContext] Database seeding completed successfully.
+[2026-05-21 23:36:19] [WRN] [Microsoft.AspNetCore.Server.Kestrel] Overriding address(es) 'https://localhost:7286, http://localhost:5203'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+[2026-05-21 23:38:08] [INF] [] Starting Application
+[2026-05-21 23:38:36] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@electropi.com
+[2026-05-21 23:38:37] [WRN] [ElectroPiTask.Application.Services.AuthService] Failed login attempt for admin@electropi.com f
+[2026-05-21 23:38:37] [ERR] [ElectroPiTask.API.Controllers.AuthController] Error during login attempt for email: admin@electropi.com
+System.Exception: Invalid email or password
+   at ElectroPiTask.Application.Services.AuthService.LoginAsync(LoginDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\Services\AuthService.cs:line 74
+   at ElectroPiTask.API.Controllers.AuthController.Login(LoginDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Controllers\AuthController.cs:line 50
+[2026-05-21 23:39:04] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:39:04] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:39:11] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:39:12] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:39:12] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:39:12] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:39:13] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:39:13] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:39:14] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:39:14] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:39:14] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:39:15] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:39:15] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:39:16] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:39:34] [INF] [ElectroPiTask.Application.Services.ProjectService] Creating new project
+[2026-05-21 23:39:35] [INF] [ElectroPiTask.Application.Services.ProjectService] Project string created successfully
+[2026-05-21 23:40:58] [INF] [ElectroPiTask.Application.Services.ProjectService] Retreiving all projects
+[2026-05-21 23:41:39] [INF] [ElectroPiTask.Application.Services.ProjectService] Retreiving project with ID "d5db63c9-f699-442a-ae71-3ba1bbf875b2"
+[2026-05-21 23:42:09] [INF] [ElectroPiTask.Application.Services.ProjectService] Updating project with ID "d5db63c9-f699-442a-ae71-3ba1bbf875b2"
+[2026-05-21 23:42:30] [INF] [ElectroPiTask.Application.Services.ProjectService] Deleting Project with ID "d5db63c9-f699-442a-ae71-3ba1bbf875b2"
+[2026-05-21 23:42:44] [INF] [ElectroPiTask.Application.Services.ProjectService] Creating new project
+[2026-05-21 23:42:44] [INF] [ElectroPiTask.Application.Services.ProjectService] Project test created successfully
+[2026-05-21 23:44:16] [INF] [] Starting Application
+[2026-05-21 23:44:34] [INF] [ElectroPiTask.Application.Services.ProjectService] Retreiving all projects
+[2026-05-21 23:45:41] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@electropi.com
+[2026-05-21 23:45:41] [WRN] [ElectroPiTask.Application.Services.AuthService] Failed login attempt for admin@electropi.com f
+[2026-05-21 23:45:41] [ERR] [ElectroPiTask.API.Controllers.AuthController] Error during login attempt for email: admin@electropi.com
+System.Exception: Invalid email or password
+   at ElectroPiTask.Application.Services.AuthService.LoginAsync(LoginDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\Services\AuthService.cs:line 74
+   at ElectroPiTask.API.Controllers.AuthController.Login(LoginDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Controllers\AuthController.cs:line 50
+[2026-05-21 23:45:56] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-21 23:45:56] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-21 23:47:39] [INF] [ElectroPiTask.Application.Services.ProjectService] Retreiving all projects
+[2026-05-21 23:48:05] [INF] [ElectroPiTask.Application.Services.ProjectTaskService] Creating a new task
+[2026-05-21 23:48:21] [INF] [ElectroPiTask.Application.Services.ProjectTaskService] Task task1 created successfully
+[2026-05-21 23:48:52] [INF] [ElectroPiTask.Application.Services.ProjectTaskService] Creating a new task
+[2026-05-21 23:48:54] [ERR] [Microsoft.EntityFrameworkCore.Database.Command] Failed executing DbCommand (15ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 2000), @p2='?' (DbType = DateTime2), @p3='?' (Size = 20), @p4='?' (DbType = Guid), @p5='?' (Size = 20), @p6='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tasks] ([Id], [Description], [DueDate], [Priority], [ProjectId], [Status], [Title])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+[2026-05-21 23:48:54] [ERR] [Microsoft.EntityFrameworkCore.Update] An exception occurred in the database while saving changes for context type 'ElectroPiTask.Infrastructure.Persistence.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Tasks_Projects_ProjectId". The conflict occurred in database "ElectroPiTaskDB", table "dbo.Projects", column 'Id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:c82ae596-4315-4a2d-88b1-ef77333f967f
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Tasks_Projects_ProjectId". The conflict occurred in database "ElectroPiTaskDB", table "dbo.Projects", column 'Id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:c82ae596-4315-4a2d-88b1-ef77333f967f
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+[2026-05-21 23:48:54] [ERR] [ElectroPiTask.API.Controllers.ProjectTaskController] Error creating new project
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Tasks_Projects_ProjectId". The conflict occurred in database "ElectroPiTaskDB", table "dbo.Projects", column 'Id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:c82ae596-4315-4a2d-88b1-ef77333f967f
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ElectroPiTask.Infrastructure.Repositories.GenericRepository`1.SaveChangesAsync() in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Infrastructure\Repositories\GenericRepository.cs:line 70
+   at ElectroPiTask.Application.Services.ProjectTaskService.CreateProjectTaskAsync(CreateProjectTaskDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\Services\ProjectTaskService.cs:line 43
+   at ElectroPiTask.API.Controllers.ProjectTaskController.CreateProjectTask(CreateProjectTaskDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Controllers\ProjectTaskController.cs:line 31
