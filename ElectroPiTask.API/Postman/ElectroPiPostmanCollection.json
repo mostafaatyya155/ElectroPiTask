@@ -1,0 +1,624 @@
+{
+  "info": {
+    "name": "ElectroPiTask API",
+    "_postman_id": "electropitask-collection-v1",
+    "description": "Postman collection for the ElectroPiTask ASP.NET Core 9 Web API.\n\n## Setup\n1. Import this collection.\n2. Set the `baseUrl` variable to your server (default: `https://localhost:5001`).\n3. Run **Login** or **Register** — the `token` variable is set automatically via the test script.\n4. All protected requests will use the token automatically.\n\n## Roles\n- **Admin** — full CRUD on projects and tasks.\n- **Viewer** — read-only (GET endpoints are public).\n\n## Default Admin\n- Email: `admin@elctropi.com`\n- Password: `Admin@123`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:5001",
+      "type": "string",
+      "description": "Base URL of the ElectroPiTask API"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string",
+      "description": "JWT token — set automatically after Login or Register"
+    },
+    {
+      "key": "projectId",
+      "value": "",
+      "type": "string",
+      "description": "Project GUID — set this after creating or retrieving a project"
+    },
+    {
+      "key": "taskId",
+      "value": "",
+      "type": "string",
+      "description": "Task GUID — set this after creating or retrieving a task"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints — register and login. No token required.",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane.doe@example.com\",\n  \"password\": \"P@ssw0rd123\",\n  \"role\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Register a new user.\n\n**role values:**\n- `0` = Admin\n- `1` = Viewer\n\nThe JWT token is automatically saved to the `token` collection variable."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.data && json.data.token) {",
+                  "        pm.collectionVariables.set('token', json.data.token);",
+                  "        console.log('Token saved to collection variable.');",
+                  "    }",
+                  "}",
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has token', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('token');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Register — Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane.doe@example.com\",\n  \"password\": \"P@ssw0rd123\",\n  \"role\": 1\n}"
+                }
+              },
+              "body": "{\n  \"success\": true,\n  \"message\": \"User registered successfully.\",\n  \"data\": {\n    \"token\": \"<jwt_token>\",\n    \"email\": \"jane.doe@example.com\",\n    \"fullName\": \"Jane Doe\",\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\",\n    \"role\": \"Viewer\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@elctropi.com\",\n  \"password\": \"Admin@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Login with an existing account and receive a JWT token.\n\nThe default seeded admin credentials are:\n- Email: `admin@elctropi.com`\n- Password: `Admin@123`\n\nThe JWT token is automatically saved to the `token` collection variable."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    if (json.data && json.data.token) {",
+                  "        pm.collectionVariables.set('token', json.data.token);",
+                  "        console.log('Token saved to collection variable.');",
+                  "    }",
+                  "}",
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has token', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('token');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Login — Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@elctropi.com\",\n  \"password\": \"Admin@123\"\n}"
+                }
+              },
+              "body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"token\": \"<jwt_token>\",\n    \"email\": \"admin@elctropi.com\",\n    \"fullName\": \"Default User\",\n    \"firstName\": \"Default\",\n    \"lastName\": \"User\",\n    \"role\": \"Admin\"\n  }\n}"
+            },
+            {
+              "name": "Login — Invalid Credentials",
+              "status": "Bad Request",
+              "code": 400,
+              "originalRequest": {
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"wrong@example.com\",\n  \"password\": \"wrongpassword\"\n}"
+                }
+              },
+              "body": "{\n  \"success\": false,\n  \"message\": \"Invalid email or password\",\n  \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "description": "CRUD operations for projects.\n\n- GET endpoints are public.\n- POST, PUT, DELETE require an **Admin** JWT token.",
+      "item": [
+        {
+          "name": "Get All Projects",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Project",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Project"]
+            },
+            "description": "Retrieve a list of all projects. No authentication required."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Data is an array', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.be.an('array');",
+                  "});",
+                  "// Auto-save first project ID for convenience",
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data.length > 0) {",
+                  "    pm.collectionVariables.set('projectId', json.data[0].id);",
+                  "    console.log('projectId set to: ' + json.data[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Get All Projects — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"All projects retrieved successfully.\",\n  \"data\": [\n    {\n      \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"name\": \"Website Redesign\",\n      \"description\": \"Redesign the company website\",\n      \"createdAt\": \"2026-05-21T20:00:00Z\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Project By ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Project/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Project", "{{projectId}}"]
+            },
+            "description": "Retrieve a single project by its GUID. No authentication required.\n\nSet the `projectId` collection variable, or replace `{{projectId}}` with an actual GUID."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Data has id', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('id');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Get Project By ID — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Project retrieved successfully.\",\n  \"data\": {\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"name\": \"Website Redesign\",\n    \"description\": \"Redesign the company website\",\n    \"createdAt\": \"2026-05-21T20:00:00Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/Project",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Project"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Website Redesign\",\n  \"description\": \"Full redesign of the company website including UI/UX overhaul\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Create a new project. **Requires Admin JWT token.**\n\nThe new project's ID is automatically saved to the `projectId` collection variable."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Project created', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.true;",
+                  "    pm.expect(json.data).to.have.property('id');",
+                  "});",
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data.id) {",
+                  "    pm.collectionVariables.set('projectId', json.data.id);",
+                  "    console.log('projectId set to: ' + json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Create Project — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Project created successfully.\",\n  \"data\": {\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"name\": \"Website Redesign\",\n    \"description\": \"Full redesign of the company website including UI/UX overhaul\",\n    \"createdAt\": \"2026-05-22T10:00:00Z\"\n  }\n}"
+            },
+            {
+              "name": "Create Project — Unauthorized",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/Project",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Project"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"{{projectId}}\",\n  \"name\": \"Website Redesign v2\",\n  \"description\": \"Updated scope to include mobile-first design\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Update an existing project's name and description. **Requires Admin JWT token.**\n\nThe `id` field in the body must be the GUID of the project to update. Uses `{{projectId}}` by default."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Project updated', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Update Project — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Project updated successfully.\",\n  \"data\": {\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"name\": \"Website Redesign v2\",\n    \"description\": \"Updated scope to include mobile-first design\",\n    \"createdAt\": \"2026-05-22T10:00:00Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Project/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Project", "{{projectId}}"]
+            },
+            "description": "Delete a project by its GUID. **Requires Admin JWT token.**\n\nUses `{{projectId}}` collection variable by default."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Project deleted', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Delete Project — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Project deleted successfully.\",\n  \"data\": \"Project deleted successfully.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Project Tasks",
+      "description": "CRUD operations for tasks within a project.\n\n- GET endpoints are public.\n- POST, PUT, DELETE require an **Admin** JWT token.\n\n**Status values:** 0=Todo, 1=InProgress, 2=Done, 3=Cancelled\n**Priority values:** 0=Low, 1=Medium, 2=High, 3=Critical",
+      "item": [
+        {
+          "name": "Get Tasks By Project",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ProjectTask/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProjectTask", "{{projectId}}"]
+            },
+            "description": "Retrieve all tasks for a given project. No authentication required.\n\nUses `{{projectId}}` collection variable by default."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Data is an array', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.be.an('array');",
+                  "});",
+                  "// Auto-save first task ID for convenience",
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data.length > 0) {",
+                  "    pm.collectionVariables.set('taskId', json.data[0].id);",
+                  "    console.log('taskId set to: ' + json.data[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Get Tasks By Project — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"All tasks for the project retrieved successfully.\",\n  \"data\": [\n    {\n      \"id\": \"7cb85f64-1234-4562-b3fc-2c963f66afa6\",\n      \"title\": \"Design login screen\",\n      \"description\": \"Create wireframes and final design assets\",\n      \"status\": 0,\n      \"dueDate\": \"2026-06-01T00:00:00Z\",\n      \"priority\": 2,\n      \"projectId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/ProjectTask",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProjectTask"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Design login screen\",\n  \"description\": \"Create wireframes and final design assets for the login page\",\n  \"status\": 0,\n  \"dueDate\": \"2026-06-01T00:00:00Z\",\n  \"priority\": 2,\n  \"projectId\": \"{{projectId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Create a new task within a project. **Requires Admin JWT token.**\n\n**status:** 0=Todo, 1=InProgress, 2=Done, 3=Cancelled\n\n**priority:** 0=Low, 1=Medium, 2=High, 3=Critical\n\nThe new task's ID is automatically saved to the `taskId` collection variable."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task created', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.true;",
+                  "    pm.expect(json.data).to.have.property('id');",
+                  "});",
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data.id) {",
+                  "    pm.collectionVariables.set('taskId', json.data.id);",
+                  "    console.log('taskId set to: ' + json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Create Task — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"User registered successfully.\",\n  \"data\": {\n    \"id\": \"7cb85f64-1234-4562-b3fc-2c963f66afa6\",\n    \"title\": \"Design login screen\",\n    \"description\": \"Create wireframes and final design assets for the login page\",\n    \"status\": 0,\n    \"dueDate\": \"2026-06-01T00:00:00Z\",\n    \"priority\": 2,\n    \"projectId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Task Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/ProjectTask",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProjectTask"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"{{taskId}}\",\n  \"status\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Update the status of an existing task. **Requires Admin JWT token.**\n\n**status values:**\n- `0` = Todo\n- `1` = InProgress\n- `2` = Done\n- `3` = Cancelled\n\nThe `id` field must be the GUID of the task to update. Uses `{{taskId}}` by default."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task updated', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Update Task Status — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Task status updated successfully.\",\n  \"data\": {\n    \"id\": \"7cb85f64-1234-4562-b3fc-2c963f66afa6\",\n    \"title\": \"Design login screen\",\n    \"description\": \"Create wireframes and final design assets for the login page\",\n    \"status\": 1,\n    \"dueDate\": \"2026-06-01T00:00:00Z\",\n    \"priority\": 2,\n    \"projectId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Task",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ProjectTask/{{taskId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProjectTask", "{{taskId}}"]
+            },
+            "description": "Delete a task by its GUID. **Requires Admin JWT token.**\n\nUses `{{taskId}}` collection variable by default."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task deleted', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "Delete Task — Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Task deleted successfully.\",\n  \"data\": \"Task deleted successfully.\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
