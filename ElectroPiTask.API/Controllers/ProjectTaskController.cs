@@ -32,11 +32,11 @@ namespace ElectroPiTask.API.Controllers
 
                 return Ok(ApiResponse<ProjectTaskDto>.SuccessResponse(
                     result,
-                    "User registered successfully."));
+                    "Task Created successfully."));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating new project");
+                _logger.LogError(ex, "Error creating new task");
                 return BadRequest(ApiResponse<ProjectTaskDto>.FailureResponse(ex.Message));
             }
         }
@@ -56,7 +56,7 @@ namespace ElectroPiTask.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving all task for the project");
+                _logger.LogError(ex, "Error retrieving all tasks for the project");
                 return BadRequest(ApiResponse<List<ProjectTaskDto>>.FailureResponse(ex.Message));
             }
         }
