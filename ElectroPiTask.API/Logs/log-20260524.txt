@@ -7,3 +7,50 @@
 [2026-05-24 03:38:09] [INF] [] Starting Application
 [2026-05-24 03:38:20] [INF] [ElectroPiTask.API.Controllers.AuthController] Registering user with email: string
 [2026-05-24 03:38:21] [INF] [ElectroPiTask.API.Controllers.AuthController] User registered successfully with email: string
+[2026-05-24 04:29:02] [INF] [] Starting Application
+[2026-05-24 04:29:43] [INF] [ElectroPiTask.API.Controllers.AuthController] Registering user with email: admin@elctropi.com
+[2026-05-24 04:29:43] [WRN] [ElectroPiTask.Application.Services.AuthService] Email already exists: admin@elctropi.com
+[2026-05-24 04:30:00] [WRN] [ElectroPiTask.API.Middleware.GlobalExceptionHandlingMiddleware] Business rule violation: Email already exists
+ElectroPiTask.Application.Common.Exceptions.BusinessException: Email already exists
+   at ElectroPiTask.Application.Services.AuthService.RegisterUserAsync(RegisterDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\Services\AuthService.cs:line 39
+   at ElectroPiTask.API.Controllers.AuthController.Register(RegisterDto dto) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Controllers\AuthController.cs:line 28
+   at lambda_method14(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at ElectroPiTask.API.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Middleware\GlobalExceptionHandlingMiddleware.cs:line 27
+[2026-05-24 04:30:54] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-24 04:30:55] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-24 04:31:17] [INF] [ElectroPiTask.Application.Services.ProjectService] Retrieving all projects
+[2026-05-24 04:32:09] [INF] [] Starting Application
+[2026-05-24 04:32:21] [INF] [ElectroPiTask.Application.Services.ProjectService] Retrieving all projects
+[2026-05-24 04:34:19] [INF] [] Starting Application
+[2026-05-24 04:34:59] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-24 04:35:00] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-24 04:35:42] [INF] [ElectroPiTask.Application.Services.ProjectService] Retrieving all projects
+[2026-05-24 04:35:55] [INF] [ElectroPiTask.Application.Services.ProjectService] Retrieving project with ID "17c02b30-94e1-4628-9ce1-9347c147f526"
+[2026-05-24 04:35:57] [WRN] [ElectroPiTask.API.Middleware.GlobalExceptionHandlingMiddleware] Not found: Project with ID '17c02b30-94e1-4628-9ce1-9347c147f526' was not found.
+ElectroPiTask.Application.Common.Exceptions.NotFoundException: Project with ID '17c02b30-94e1-4628-9ce1-9347c147f526' was not found.
+   at ElectroPiTask.Application.Services.ProjectService.GetProjectByIdAsync(Guid id) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\Services\ProjectService.cs:line 58
+   at ElectroPiTask.API.Controllers.ProjectController.GetProjectById(Guid id) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Controllers\ProjectController.cs:line 49
+   at lambda_method122(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at ElectroPiTask.API.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.API\Middleware\GlobalExceptionHandlingMiddleware.cs:line 27

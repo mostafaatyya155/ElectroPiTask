@@ -1,4 +1,5 @@
-﻿using ElectroPiTask.Application.Common.Interfaces;
+﻿using ElectroPiTask.Application.Common.Exceptions;
+using ElectroPiTask.Application.Common.Interfaces;
 using ElectroPiTask.Application.DTOs.Auth;
 using ElectroPiTask.Domain.Entities;
 using ElectroPiTask.Domain.Enums;
@@ -29,13 +30,13 @@ namespace ElectroPiTask.Application.Services
 
         public async Task<AuthResponseDto> RegisterUserAsync(RegisterDto dto)
         {
-            _logger.LogDebug("Starting charity registration for {Email}", dto.Email);
+            _logger.LogDebug("Starting user registration for {Email}", dto.Email);
 
             // Check if email exists
             if (await _userRepository.ExistsAsync(u => u.Email == dto.Email))
             {
                 _logger.LogWarning("Email already exists: {Email}", dto.Email);
-                throw new Exception("Email already exists");
+                throw new BusinessException("Email already exists");
             }
 
             var user = new User
@@ -71,7 +72,7 @@ namespace ElectroPiTask.Application.Services
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             {
                 _logger.LogWarning("Failed login attempt for {Email} f", dto.Email);
-                throw new Exception("Invalid email or password");
+                throw new BusinessException("Invalid email or password");
             }
 
             _logger.LogDebug("User {Email} logged in successfully", dto.Email);

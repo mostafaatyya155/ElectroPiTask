@@ -24,39 +24,24 @@ namespace ElectroPiTask.API.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Register(RegisterDto dto)
         {
-            try
-            {
-                _logger.LogInformation("Registering user with email: {Email}", dto.Email);
-                var result = await _authService.RegisterUserAsync(dto);
-                _logger.LogInformation("User registered successfully with email: {Email}", result.Email);
-                return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(
-                    result,
-                    "User registered successfully."));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error registering new user with email: {Email}", dto.Email);
-                return BadRequest(ApiResponse<AuthResponseDto>.FailureResponse(ex.Message));
-            }
+            _logger.LogInformation("Registering user with email: {Email}", dto.Email);
+            var result = await _authService.RegisterUserAsync(dto);
+            _logger.LogInformation("User registered successfully with email: {Email}", result.Email);
+
+            return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(
+                result,
+                "User registered successfully."));
         }
 
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Login(LoginDto dto)
         {
-            try
-            {
-                _logger.LogInformation("Login attempt for email: {Email}", dto.Email);
-                var result = await _authService.LoginAsync(dto);
-                _logger.LogInformation("Login successful for email: {Email}", dto.Email);
+            _logger.LogInformation("Login attempt for email: {Email}", dto.Email);
+            var result = await _authService.LoginAsync(dto);
+            _logger.LogInformation("Login successful for email: {Email}", dto.Email);
 
-                return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(result, "Login successful"));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error during login attempt for email: {Email}", dto.Email);
-                return BadRequest(ApiResponse<AuthResponseDto>.FailureResponse(ex.Message));
-            }
+            return Ok(ApiResponse<AuthResponseDto>.SuccessResponse(result, "Login successful"));
         }
 
     }

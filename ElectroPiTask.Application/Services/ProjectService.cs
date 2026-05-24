@@ -1,4 +1,5 @@
-﻿using ElectroPiTask.Application.Common.Interfaces;
+﻿using ElectroPiTask.Application.Common.Exceptions;
+using ElectroPiTask.Application.Common.Interfaces;
 using ElectroPiTask.Application.DTOs.Project;
 using ElectroPiTask.Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -26,9 +27,8 @@ namespace ElectroPiTask.Application.Services
 
         public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto dto)
         {
-            _logger.LogInformation("Creating new project");
+            _logger.LogInformation("Creating new project: {Name}", dto.Name);
 
-            //Create project
             var project = new Project
             {
                 Name = dto.Name,
@@ -38,103 +38,65 @@ namespace ElectroPiTask.Application.Services
             await _projectRepository.AddAsync(project);
             await _projectRepository.SaveChangesAsync();
 
-            _logger.LogInformation("Project {project.Name} created successfully", project.Name);
+            _logger.LogInformation("Project '{Name}' created successfully with ID {Id}", project.Name, project.Id);
 
-            //Map to DTO
-            return new ProjectDto
-            {
-                Id = project.Id,
-                Name = project.Name,
-                Description = project.Description,
-            };
-
+            return MapToDto(project);
         }
 
         public async Task<List<ProjectDto>> GetAllProjectsAsync()
         {
-            _logger.LogInformation("Retreiving all projects");
+            _logger.LogInformation("Retrieving all projects");
 
             var projects = await _projectRepository.GetAllAsync();
-            
-            List<ProjectDto> result = new List<ProjectDto>();
-            foreach (var project in projects)
-            {
-                result.Add(new ProjectDto
-                {
-                    Id = project.Id,
-                    Name = project.Name,
-                    Description = project.Description,
-                });
-            }
-            return result;
+            return projects.Select(MapToDto).ToList();
         }
-
 
         public async Task<ProjectDto> GetProjectByIdAsync(Guid id)
         {
-            _logger.LogInformation("Retreiving project with ID {id}",id);
+            _logger.LogInformation("Retrieving project with ID {Id}", id);
 
-            var project = await _projectRepository.GetByIdAsync(id);
+            var project = await _projectRepository.GetByIdAsync(id)
+                ?? throw new NotFoundException(nameof(Project), id);
 
-            if(project == null)
-            {
-                _logger.LogWarning("Project not found with ID {id}", id);
-                throw new Exception("Project not found");
-            }
-            else
-            {
-                return new ProjectDto
-                {
-                    Id = project.Id,
-                    Name = project.Name,
-                    Description = project.Description
-                };
-            }
+            return MapToDto(project);
         }
 
         public async Task<ProjectDto> UpdateProjectAsync(UpdateProjectDto dto)
         {
-            _logger.LogInformation("Updating project with ID {dto.Id}", dto.Id);
+            _logger.LogInformation("Updating project with ID {Id}", dto.Id);
 
-            var project = await _projectRepository.GetByIdAsync(dto.Id);
+            var project = await _projectRepository.GetByIdAsync(dto.Id)
+                ?? throw new NotFoundException(nameof(Project), dto.Id);
 
-            if (project == null)
-            {
-                _logger.LogWarning("Project not found with ID {Id}", dto.Id);
-                throw new Exception("Project not found");
-            }
-            else
-            {
-                project.Name = dto.Name;
-                project.Description = dto.Description;
-                await _projectRepository.UpdateAsync(project);
-                await _projectRepository.SaveChangesAsync();
+            project.Name = dto.Name;
+            project.Description = dto.Description;
 
-                return new ProjectDto
-                {
-                    Id = project.Id,
-                    Name = project.Name,
-                    Description = project.Description
-                };
-            }
+            await _projectRepository.UpdateAsync(project);
+            await _projectRepository.SaveChangesAsync();
+
+            _logger.LogInformation("Project with ID {Id} updated successfully", dto.Id);
+
+            return MapToDto(project);
         }
 
         public async Task DeleteProjectAsync(Guid id)
         {
-            _logger.LogInformation("Deleting Project with ID {id}", id);
+            _logger.LogInformation("Deleting project with ID {Id}", id);
 
-            var projectToDelete = await _projectRepository.GetByIdAsync(id);
+            var project = await _projectRepository.GetByIdAsync(id)
+                ?? throw new NotFoundException(nameof(Project), id);
 
-            if (projectToDelete != null)
-            {
-                await _projectRepository.DeleteAsync(projectToDelete);
-                await _projectRepository.SaveChangesAsync();
-            }
-            else
-            {
-                _logger.LogWarning("Project not found with ID {id}", id);
-                throw new Exception("Project not found");
-            }
+            await _projectRepository.DeleteAsync(project);
+            await _projectRepository.SaveChangesAsync();
+
+            _logger.LogInformation("Project with ID {Id} deleted successfully", id);
         }
+
+        private static ProjectDto MapToDto(Project project) => new()
+        {
+            Id = project.Id,
+            Name = project.Name,
+            Description = project.Description,
+        };
     }
 }

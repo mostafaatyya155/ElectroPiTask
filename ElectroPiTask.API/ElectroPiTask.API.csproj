@@ -29,8 +29,4 @@
     <ProjectReference Include="..\ElectroPiTask.Infrastructure\ElectroPiTask.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Middleware\" />
-  </ItemGroup>
-
 </Project>

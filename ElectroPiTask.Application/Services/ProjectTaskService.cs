@@ -1,4 +1,5 @@
-﻿using ElectroPiTask.Application.Common.Interfaces;
+﻿using ElectroPiTask.Application.Common.Exceptions;
+using ElectroPiTask.Application.Common.Interfaces;
 using ElectroPiTask.Application.DTOs.Project;
 using ElectroPiTask.Application.DTOs.ProjectTask;
 using ElectroPiTask.Domain.Entities;
@@ -26,9 +27,8 @@ namespace ElectroPiTask.Application.Services
 
         public async Task<ProjectTaskDto> CreateProjectTaskAsync(CreateProjectTaskDto dto)
         {
-            _logger.LogInformation("Creating a new task");
+            _logger.LogInformation("Creating a new task for project {ProjectId}", dto.ProjectId);
 
-            //Creating project task
             var task = new ProjectTask
             {
                 Title = dto.Title,
@@ -36,96 +36,64 @@ namespace ElectroPiTask.Application.Services
                 Status = dto.Status,
                 Priority = dto.Priority,
                 DueDate = dto.DueDate,
-                ProjectId = dto.ProjectId 
+                ProjectId = dto.ProjectId
             };
 
             await _projectTaskRepository.AddAsync(task);
             await _projectTaskRepository.SaveChangesAsync();
 
-            _logger.LogInformation("Task {task.Name} created successfully", task.Title);
+            _logger.LogInformation("Task '{Title}' created successfully with ID {Id}", task.Title, task.Id);
 
-            //Map to DTO
-            return new ProjectTaskDto
-            {
-                Id = task.Id,
-                Title = task.Title,
-                Description= task.Description,
-                Status = task.Status,
-                Priority = task.Priority,
-                DueDate = task.DueDate,
-                ProjectId = task.ProjectId
-            };
+            return MapToDto(task);
         }
 
         public async Task<ProjectTaskDto> UpdateProjectTaskStatusAsync(UpdateProjectTaskStatusDto dto)
         {
-            _logger.LogInformation("Updating status for task with ID {dto.Id}", dto.Id);
+            _logger.LogInformation("Updating status for task with ID {Id}", dto.Id);
 
-            var task = await _projectTaskRepository.GetByIdAsync(dto.Id);
+            var task = await _projectTaskRepository.GetByIdAsync(dto.Id)
+                ?? throw new NotFoundException(nameof(ProjectTask), dto.Id);
 
-            if (task == null)
-            {
-                _logger.LogWarning("Task not found with ID {Id}", dto.Id);
-                throw new Exception("Task not found");
-            }
-            else
-            {
-                task.Status = dto.Status;
-                await _projectTaskRepository.UpdateAsync(task);
-                await _projectTaskRepository.SaveChangesAsync();
+            task.Status = dto.Status;
 
-                return new ProjectTaskDto
-                {
-                    Id = task.Id,
-                    Title = task.Title,
-                    Description = task.Description,
-                    Status = task.Status,
-                    Priority = task.Priority,
-                    DueDate = task.DueDate,
-                    ProjectId = task.ProjectId
-                };
-            }
+            await _projectTaskRepository.UpdateAsync(task);
+            await _projectTaskRepository.SaveChangesAsync();
+
+            _logger.LogInformation("Task with ID {Id} status updated to {Status}", dto.Id, dto.Status);
+
+            return MapToDto(task);
         }
 
-        public async Task<List<ProjectTaskDto>> GetTasksByProjectAsync(Guid id)
+        public async Task<List<ProjectTaskDto>> GetTasksByProjectAsync(Guid projectId)
         {
-            _logger.LogInformation("Retreiving all tasks for project with ID {id}",id);
+            _logger.LogInformation("Retrieving all tasks for project with ID {ProjectId}", projectId);
 
-            var tasks = await _projectTaskRepository.FindAsync(t => t.ProjectId == id);
-
-            List<ProjectTaskDto> result = new List<ProjectTaskDto>();
-            foreach (var task in tasks)
-            {
-                result.Add(new ProjectTaskDto
-                {
-                    Id = task.Id,
-                    Title = task.Title,
-                    Description = task.Description,
-                    Status = task.Status,
-                    Priority = task.Priority,
-                    DueDate = task.DueDate,
-                    ProjectId = task.ProjectId
-                });
-            }
-            return result;
+            var tasks = await _projectTaskRepository.FindAsync(t => t.ProjectId == projectId);
+            return tasks.Select(MapToDto).ToList();
         }
+
         public async Task DeleteTaskAsync(Guid id)
         {
-            _logger.LogInformation("Deleting Task with ID {id}", id);
+            _logger.LogInformation("Deleting task with ID {Id}", id);
 
-            var taskToDelete = await _projectTaskRepository.GetByIdAsync(id);
+            var task = await _projectTaskRepository.GetByIdAsync(id)
+                ?? throw new NotFoundException(nameof(ProjectTask), id);
 
+            await _projectTaskRepository.DeleteAsync(task);
+            await _projectTaskRepository.SaveChangesAsync();
 
-            if (taskToDelete != null)
-            {
-                await _projectTaskRepository.DeleteAsync(taskToDelete);
-                await _projectTaskRepository.SaveChangesAsync();
-            }
-            else
-            {
-                _logger.LogWarning("Task not found with ID {id}", id);
-                throw new Exception("Task not found");
-            }
+            _logger.LogInformation("Task with ID {Id} deleted successfully", id);
         }
+
+        private static ProjectTaskDto MapToDto(ProjectTask task) => new()
+        {
+            Id = task.Id,
+            Title = task.Title,
+            Description = task.Description,
+            Status = task.Status,
+            Priority = task.Priority,
+            DueDate = task.DueDate,
+            ProjectId = task.ProjectId
+        };
     }
 }

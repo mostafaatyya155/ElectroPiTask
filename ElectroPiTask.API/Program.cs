@@ -1,6 +1,7 @@
 ﻿
 using API.Extensions;
 using ElectroPiTask.API.Extensions;
+using ElectroPiTask.API.Middleware;
 using ElectroPiTask.Application.Common.Interfaces;
 using ElectroPiTask.Application.Services;
 using ElectroPiTask.Infrastructure.Persistence;
@@ -136,6 +137,9 @@ namespace ElectroPiTask.API
                     app.UseSwagger();
                     app.UseSwaggerUI();
                 }
+
+                // Global exception handler
+                app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
                 app.UseHttpsRedirection();
                 app.UseCors("AllowAll");
