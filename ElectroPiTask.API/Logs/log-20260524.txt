@@ -1,0 +1,9 @@
+[2026-05-24 03:32:35] [INF] [] Starting Application
+[2026-05-24 03:34:17] [INF] [] Starting Application
+[2026-05-24 03:35:08] [INF] [ElectroPiTask.API.Controllers.AuthController] Login attempt for email: admin@elctropi.com
+[2026-05-24 03:35:09] [INF] [ElectroPiTask.API.Controllers.AuthController] Login successful for email: admin@elctropi.com
+[2026-05-24 03:35:50] [INF] [ElectroPiTask.Application.Services.ProjectService] Retreiving all projects
+[2026-05-24 03:36:28] [INF] [ElectroPiTask.Application.Services.ProjectTaskService] Retreiving all tasks for project with ID "19c02b30-94e1-4628-9ce1-9347c147f526"
+[2026-05-24 03:38:09] [INF] [] Starting Application
+[2026-05-24 03:38:20] [INF] [ElectroPiTask.API.Controllers.AuthController] Registering user with email: string
+[2026-05-24 03:38:21] [INF] [ElectroPiTask.API.Controllers.AuthController] User registered successfully with email: string

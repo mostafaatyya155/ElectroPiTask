@@ -13,3 +13,4 @@ D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\obj\Debug\net9.0\
 D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\obj\Debug\net9.0\refint\ElectroPiTask.Application.dll
 D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\obj\Debug\net9.0\ElectroPiTask.Application.pdb
 D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\obj\Debug\net9.0\ref\ElectroPiTask.Application.dll
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Application\obj\Debug\net9.0\ElectroPiTask.Application.sourcelink.json

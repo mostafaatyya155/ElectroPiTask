@@ -17,3 +17,4 @@ D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Infrastructure\obj\Debug\net9
 D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Infrastructure\obj\Debug\net9.0\ref\ElectroPiTask.Infrastructure.dll
 D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Infrastructure\bin\Debug\net9.0\ElectroPiTask.Infrastructure.runtimeconfig.json
 D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Infrastructure\obj\Debug\net9.0\ElectroPiTask.Infrastructure.genruntimeconfig.cache
+D:\Work\ElectroPi Task\ElectroPiTask\ElectroPiTask.Infrastructure\obj\Debug\net9.0\ElectroPiTask.Infrastructure.sourcelink.json

@@ -1,5 +1,6 @@
 ﻿
 using API.Extensions;
+using ElectroPiTask.API.Extensions;
 using ElectroPiTask.Application.Common.Interfaces;
 using ElectroPiTask.Application.Services;
 using ElectroPiTask.Infrastructure.Persistence;
@@ -55,6 +56,9 @@ namespace ElectroPiTask.API
                 // Add services to the container.
 
                 builder.Services.AddControllers();
+
+                // FluentValidation
+                builder.Services.AddFluentValidation();
 
                 builder.Services.AddSwaggerDocumentation();
 
